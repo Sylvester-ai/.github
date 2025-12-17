@@ -502,14 +502,6 @@ Unlike traditional binary classifiers that use a fixed 0.5 threshold, this model
 - Checkpoint: `models/2025-12-04/best_model_v2.pth`
 - Metrics: `models/2025-12-04/2025-12-04_training_metrics_v2.json`
 
-### Scientific Background
-
-**Feline Grimace Scale (FGS):**
-- Holden, E., Calvo, G., Collins, M., et al. (2014). *Evaluation of facial expression in acute pain in cats.* Journal of Small Animal Practice, 55(12), 615-621.
-- Evangelista, M. C., Watanabe, R., Leung, V. S., et al. (2019). *Facial expressions of pain in cats: the development and validation of a Feline Grimace Scale.* Scientific Reports, 9(1), 19128.
-
-**Transfer Learning and ResNet:**
-- He, K., Zhang, X., Ren, S., & Sun, J. (2016). *Deep Residual Learning for Image Recognition.* CVPR 2016.
 
 ### Suggested Citation
 
@@ -526,8 +518,8 @@ Available at: [Repository URL]
 
 ## Model Card Authors
 
-**Primary Developer:** [Your Name/Organization]  
-**Contact:** [Contact Information]  
+**Primary Developer:** Michael Berg
+**Contact:** mike@sylvester.ai 
 **Last Updated:** December 16, 2025  
 **Version:** 1.0
 

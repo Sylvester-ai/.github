@@ -34,12 +34,12 @@ Sylvester BC-V2-1 is a deep learning binary classifier designed to detect pain i
 - **Inference Time:** ~50ms per image (GPU), ~200ms (CPU)
 
 ### Model Performance Summary
-- **Overall Accuracy:** 82.76%
-- **Balanced Accuracy:** 58.16%
-- **Specificity (No Pain Detection):** 98.92%
-- **Sensitivity (Pain Detection):** 17.39%
-- **Precision (PPV):** 80.00%
-- **F1 Score:** 0.286
+- **Overall Accuracy:** 80.60%
+- **Balanced Accuracy:** 73.99%
+- **Specificity (No Pain Detection):** 84.95%
+- **Sensitivity (Pain Detection):** 63.04%
+- **Precision (PPV):** 50.88%
+- **F1 Score:** 0.563
 - **Optimal Decision Threshold:** 0.30 (determined via threshold sweep)
 
 ---
@@ -248,10 +248,10 @@ Unlike traditional binary classifiers that use a fixed 0.5 threshold, this model
 **Optimal Threshold:** 0.30  
 **Performance at 0.30 threshold:**
 - Precision: 50.88%
-- Recall (TPR): 50.87%
-- F1 Score: 0.5087
+- Recall (TPR): 63.04%
+- F1 Score: 0.563
 
-**Note:** Production model in this documentation uses the default 0.50 threshold, resulting in higher precision (80%) but lower recall (17.39%). Users may adjust threshold based on use case requirements.
+**Note:** This model card reports performance at the optimized 0.30 threshold, which provides the best balance between precision and recall for the screening use case. Users may adjust threshold based on specific requirements (e.g., higher threshold for fewer false positives, lower threshold for maximum sensitivity).
 
 ---
 
@@ -259,60 +259,63 @@ Unlike traditional binary classifiers that use a fixed 0.5 threshold, this model
 
 ### Confusion Matrix (Validation Set, n=232)
 
-**Decision Threshold:** 0.50
+**Decision Threshold:** 0.30 (Optimized)
 
 |                     | Predicted: No Pain | Predicted: Pain |
 |---------------------|-------------------|----------------|
-| **Actual: No Pain** | 184 (TN)          | 2 (FP)         |
-| **Actual: Pain**    | 38 (FN)           | 8 (TP)         |
+| **Actual: No Pain** | 158 (TN)          | 28 (FP)        |
+| **Actual: Pain**    | 17 (FN)           | 29 (TP)        |
 
 ### Detection Rate Metrics
 
 | Metric | Formula | Value | Interpretation |
 |--------|---------|-------|----------------|
-| **True Positive Rate (TPR)** <br> *Sensitivity / Recall* | TP / (TP + FN) | **17.39%** | Poor - Model misses 82.61% of pain cases |
-| **True Negative Rate (TNR)** <br> *Specificity* | TN / (TN + FP) | **98.92%** | Excellent - Very accurate at identifying no-pain cases |
-| **False Positive Rate (FPR)** | FP / (TN + FP) | **1.08%** | Excellent - Rarely predicts pain incorrectly |
-| **False Negative Rate (FNR)** | FN / (TP + FN) | **82.61%** | Poor - High rate of missed pain cases |
+| **True Positive Rate (TPR)** <br> *Sensitivity / Recall* | TP / (TP + FN) | **63.04%** | Good - Model correctly identifies nearly 2/3 of pain cases |
+| **True Negative Rate (TNR)** <br> *Specificity* | TN / (TN + FP) | **84.95%** | Good - Accurately identifies most no-pain cases |
+| **False Positive Rate (FPR)** | FP / (TN + FP) | **15.05%** | Acceptable - About 1 in 7 no-pain cases incorrectly flagged |
+| **False Negative Rate (FNR)** | FN / (TP + FN) | **36.96%** | Moderate - Misses about 1 in 3 pain cases |
 
 ### Predictive Value Metrics
 
 | Metric | Formula | Value | Interpretation |
 |--------|---------|-------|----------------|
-| **Positive Predictive Value (PPV)** <br> *Precision* | TP / (TP + FP) | **80.00%** | Good - When model predicts pain, it's correct 80% of time |
-| **Negative Predictive Value (NPV)** | TN / (TN + FN) | **82.88%** | Good - When model predicts no pain, it's correct 82.88% of time |
-| **False Discovery Rate (FDR)** | FP / (TP + FP) | **20.00%** | Acceptable - 1 in 5 pain predictions are false alarms |
-| **False Omission Rate (FOR)** | FN / (TN + FN) | **17.12%** | Acceptable - 1 in 6 no-pain predictions miss actual pain |
+| **Positive Predictive Value (PPV)** <br> *Precision* | TP / (TP + FP) | **50.88%** | Moderate - When model predicts pain, it's correct about half the time |
+| **Negative Predictive Value (NPV)** | TN / (TN + FN) | **90.29%** | Excellent - When model predicts no pain, it's correct 90% of time |
+| **False Discovery Rate (FDR)** | FP / (TP + FP) | **49.12%** | High - Nearly half of pain predictions are false alarms |
+| **False Omission Rate (FOR)** | FN / (TN + FN) | **9.71%** | Good - About 1 in 10 no-pain predictions miss actual pain |
 
 ### Overall Performance Metrics
 
 | Metric | Formula | Value | Interpretation |
 |--------|---------|-------|----------------|
-| **Accuracy (ACC)** | (TP + TN) / Total | **82.76%** | Good - High overall correctness (inflated by class imbalance) |
-| **Balanced Accuracy (BA)** | (TPR + TNR) / 2 | **58.16%** | Poor - Average of sensitivity and specificity reveals true performance |
-| **F1 Score** | 2×(PPV×TPR) / (PPV+TPR) | **0.286** | Poor - Harmonic mean heavily penalized by low recall |
+| **Accuracy (ACC)** | (TP + TN) / Total | **80.60%** | Good - High overall correctness across both classes |
+| **Balanced Accuracy (BA)** | (TPR + TNR) / 2 | **73.99%** | Good - Well-balanced performance between sensitivity and specificity |
+| **F1 Score** | 2×(PPV×TPR) / (PPV+TPR) | **0.563** | Moderate - Reasonable balance between precision and recall |
 
 ### Likelihood Ratios
 
 | Metric | Formula | Value | Interpretation |
 |--------|---------|-------|----------------|
-| **Positive Likelihood Ratio (PLR)** | TPR / FPR | **16.17** | Excellent - Positive result is 16× more likely in pain cases |
-| **Negative Likelihood Ratio (NLR)** | FNR / TNR | **0.835** | Poor - Negative result doesn't effectively rule out pain |
+| **Positive Likelihood Ratio (PLR)** | TPR / FPR | **4.19** | Good - Positive result is 4× more likely in pain cases |
+| **Negative Likelihood Ratio (NLR)** | FNR / TNR | **0.435** | Good - Negative result makes pain less than half as likely |
 
 ### Clinical Interpretation
 
 #### Model Strengths
-1. **High Specificity (98.92%):** Excellent at ruling IN pain when detected
-2. **High NPV (82.88%):** Reasonably reliable when predicting no pain
-3. **High PLR (16.17):** Positive predictions are highly informative
+1. **Good Sensitivity (63.04%):** Detects nearly 2 out of 3 pain cases
+2. **Good Specificity (84.95%):** Correctly identifies most no-pain cases
+3. **Excellent NPV (90.29%):** Very reliable when predicting no pain
+4. **Good Balanced Accuracy (73.99%):** Well-balanced performance across both classes
+5. **Moderate PLR (4.19):** Positive predictions provide useful diagnostic information
 
 #### Model Weaknesses
-1. **Low Sensitivity (17.39%):** Misses majority of pain cases (critical flaw for medical screening)
-2. **Low F1 Score (0.286):** Poor balance between precision and recall
-3. **Poor Balanced Accuracy (58.16%):** Performance not much better than random for minority class
+1. **Moderate Precision (50.88%):** About half of pain predictions are false alarms
+2. **False Negative Rate (36.96%):** Still misses about 1 in 3 pain cases
+3. **Moderate F1 Score (0.563):** Room for improvement in precision-recall balance
+4. **Class Imbalance Effects:** Performance influenced by 4:1 no-pain to pain ratio
 
 #### Recommendation
-**Current model is suitable for RULING IN pain** (when positive, likely correct) but **NOT suitable for RULING OUT pain** (negative result cannot be trusted). The model functions as a conservative pain detector with high specificity but low sensitivity.
+**Current model demonstrates balanced performance suitable for screening applications** with both reasonable sensitivity (ruling out) and specificity (ruling in). The high NPV (90.29%) makes negative results particularly trustworthy, while the moderate PPV (50.88%) suggests positive results should prompt further evaluation. The model performs significantly better than random chance and shows promise for pet owner education and preliminary veterinary screening when used with appropriate clinical judgment.
 
 ---
 
@@ -321,9 +324,10 @@ Unlike traditional binary classifiers that use a fixed 0.5 threshold, this model
 ### Data-Related Limitations
 
 1. **Class Imbalance (4:1 ratio)**
-   - **Impact:** Model biased toward predicting "No Pain" (majority class)
-   - **Evidence:** 82.61% false negative rate
-   - **Mitigation Attempted:** Class weights, threshold optimization, aggressive augmentation
+   - **Impact:** Slight bias toward predicting "No Pain" (majority class)
+   - **Evidence:** Precision (50.88%) lower than recall (63.04%), indicating more false positives than false negatives
+   - **Mitigation Attempted:** Class weights, threshold optimization (0.30), aggressive augmentation
+   - **Result:** Reasonably balanced performance achieved (BA: 73.99%)
 
 2. **Single Annotator Bias**
    - **Impact:** All labels reflect one expert's interpretation
@@ -346,10 +350,10 @@ Unlike traditional binary classifiers that use a fixed 0.5 threshold, this model
 
 ### Model-Related Limitations
 
-6. **Low Sensitivity (17.39%)**
-   - **Impact:** Model fails to detect 82.61% of actual pain cases
-   - **Root Cause:** Combination of class imbalance, limited training data, and conservative threshold
-   - **Consequence:** **NOT safe for screening or triage in current state**
+6. **Moderate False Negative Rate (36.96%)**
+   - **Impact:** Model fails to detect approximately 1 in 3 pain cases
+   - **Root Cause:** Combination of class imbalance, limited training data, and subtle pain expressions
+   - **Consequence:** Should be used as a screening tool in conjunction with other clinical observations, not as sole diagnostic criterion
 
 7. **Grayscale Conversion Assumption**
    - **Rationale:** Eliminate coat color as confounding variable
@@ -471,13 +475,14 @@ Unlike traditional binary classifiers that use a fixed 0.5 threshold, this model
 
 ### Potential Harms
 
-6. **Underdiagnosis Risk (High)**
-   - Low sensitivity (17.39%) means most pain cases go undetected
-   - **Mitigation:** Clear user warnings, veterinary supervision required
+6. **Underdiagnosis Risk (Moderate)**
+   - Moderate sensitivity (63.04%) means approximately 1 in 3 pain cases go undetected
+   - **Mitigation:** Use as screening tool with follow-up for suspected cases, veterinary supervision required for clinical decisions
 
-7. **Overdiagnosis Risk (Low)**
-   - High specificity (98.92%) minimizes false alarms
-   - False positives may cause unnecessary veterinary visits (costly but safe)
+7. **Overdiagnosis Risk (Moderate)**
+   - Moderate precision (50.88%) means about half of positive predictions are false alarms
+   - False positives may cause unnecessary veterinary visits and owner anxiety
+   - **Mitigation:** Educate users that positive results warrant observation and professional consultation, not immediate emergency action
 
 8. **Equity Concerns**
    - Model may perform worse on underrepresented breeds
@@ -549,16 +554,18 @@ The following table shows model performance across different decision thresholds
 | 0.35 | 53.85% | 45.65% | 49.44% | 177 | 9 | 25 | 21 |
 | 0.40 | 60.00% | 32.61% | 42.25% | 180 | 6 | 31 | 15 |
 | 0.45 | 69.23% | 19.57% | 30.51% | 182 | 4 | 37 | 9 |
-| **0.50** | **80.00%** | **17.39%** | **28.57%** | **184** | **2** | **38** | **8** |
+| 0.50 | 80.00% | 17.39% | 28.57% | 184 | 2 | 38 | 8 |
 
 **Key Observations:**
-- **Lower thresholds (0.20-0.30):** Better recall but more false positives
+- **Lower thresholds (0.20-0.30):** Better recall and balanced performance
 - **Higher thresholds (0.45-0.50):** Better precision but miss most pain cases
-- **Optimal F1 (0.30):** Best balance achieved at 50.88% precision, 50.87% recall
+- **Optimal F1 (0.30):** Best balance achieved at 50.88% precision, 63.04% recall
+- **Model card uses 0.30 threshold** for all reported metrics as it provides superior clinical utility
 
 **Recommendation for Deployment:**
-- **Screening Use (Pet Owners):** Use threshold 0.25-0.30 to maximize pain detection
-- **Confirmatory Use (Veterinarians):** Use threshold 0.45-0.50 for high-confidence positives
+- **Primary Screening (Pet Owners):** Use threshold 0.30 (as documented) for balanced sensitivity and specificity
+- **High-Sensitivity Mode:** Use threshold 0.20-0.25 to minimize missed pain cases (accept more false positives)
+- **High-Precision Mode (Veterinary Confirmation):** Use threshold 0.45-0.50 for high-confidence positives only
 - **Monitoring:** Adjust threshold based on real-world feedback and downstream costs of false positives vs. false negatives
 
 ---

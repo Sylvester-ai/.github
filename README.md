@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/Sylvester_Logo_RGB+2.webp" alt="Sylvester Logo" width="300"/>
+</div>
+
 # Sylvester
 
 ## About Us
@@ -15,3 +19,9 @@ Our core expertise lies in the feline space, where we develop:
 ## Mission
 
 We're committed to bridging the gap between humans and their feline companions through innovative AI technology, making it easier to understand, predict, and respond to cat behavior in meaningful ways.
+
+## Model Cards
+
+Explore our published AI models and their detailed documentation:
+
+- [Behavioral Classification Model v2.1](models/model-card-bc-v2-1.md)

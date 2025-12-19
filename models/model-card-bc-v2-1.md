@@ -71,16 +71,17 @@ Once performance metrics improve (particularly sensitivity), the model is intend
 **Annotation:** Single expert cat behavioralist  
 **Collection Period:** Not disclosed (partnership confidentiality)
 
-### Feline Grimace Scale (FGS) Scoring Method
-Each cat face was evaluated using a modified Feline Grimace Scale assessing 5 facial regions:
+### Sylvester Assessment Protocol
+
+Each cat face was evaluated using Sylvester’s validated feline discomfort assessment protocol assessing standardised facial attributes similar to those developed by others (Brondani et al 2013, Calvo et al 2014, and Evangelista et al 2019): 
 
 | Region | Score Range | Indicators |
 |--------|-------------|------------|
-| Ear Position | 0-2 | Angle and rotation from baseline |
-| Orbital Tightening | 0-2 | Eye squint and tension around eyes |
-| Muzzle/Nasal Area | 0-2 | Muzzle shape and nostril position |
-| Whisker Position | 0-2 | Forward vs. backward positioning |
-| Head Position | 0-2 | Posture and positioning relative to body |
+| Ears | 0-2 | Angle and orientation  |
+| Eyes | 0-2 | Eyelid curvature and tension  |
+| Muzzle | 0-2 | Lip shape, nasal area & muzzle roundness |
+| Whiskers | 0-2 | Curvature, orientation and tightness |
+| Head | 0-2 | Posture and positioning relative to body |
 
 **Total Score:** Sum of 5 regions (0-10)  
 **Pain Threshold:** ≥4 classified as "Pain Present"
